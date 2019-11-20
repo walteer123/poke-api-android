@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: BerryViewModel
+
     private val berryAdapter by lazy {
         BerryAdapter(this)
     }
@@ -45,8 +47,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getBerriesList(){
-        viewModel.berries.observe(this, Observer {
-            berryAdapter.updateList(it.results)
+
+        viewModel.berries(
+            onStarted = {
+                progress_main.visibility = View.VISIBLE
+            },
+            onFinished = {
+                progress_main.visibility = View.GONE
+            }
+        ).observe(this, Observer {
+            berryAdapter.updateList(it)
         })
 
     }

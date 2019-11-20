@@ -6,6 +6,7 @@ import br.com.wab.myapplication.repository.handler.ExceptionHandler
 import br.com.wab.myapplication.service.BerryService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 
 class BerryDetailsViewModel: ViewModel() {
 
@@ -13,8 +14,14 @@ class BerryDetailsViewModel: ViewModel() {
 
     private val job = Job()
 
-    fun getBerry(id : Int) = liveData(job + Dispatchers.IO + ExceptionHandler.defaultHandler) {
+
+    fun getBerry(
+        id : Int,
+        onStarted: () -> Unit = {}
+    ) = liveData(job + Dispatchers.IO + ExceptionHandler.defaultHandler) {
+        onStarted()
         val response  = service.getBerry(id)
+        delay(5000)
         emit(response)
     }
 

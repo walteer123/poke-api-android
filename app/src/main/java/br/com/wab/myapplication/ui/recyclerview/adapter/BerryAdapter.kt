@@ -51,37 +51,23 @@ class BerryAdapter(
     }
 
 
-    fun updateList(berries: MutableList<GenericResultsResponse>) {
-        val result = DiffUtil.calculateDiff(
-            BerryDiffCallback(this.berries, berries)
-        )
-        this.berries = berries
+    fun updateList(newBerries: MutableList<GenericResultsResponse>) {
 
-        result.dispatchUpdatesTo(this)
+        val diff = DiffUtil.calculateDiff(object: DiffUtil.Callback(){
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean
+                    = berries[oldItemPosition] == newBerries[newItemPosition]
+
+            override fun getOldListSize(): Int = berries.size
+
+            override fun getNewListSize(): Int = newBerries.size
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean
+                    = berries[oldItemPosition].url == newBerries[newItemPosition].url
+        })
+
+        this.berries = newBerries
+        diff.dispatchUpdatesTo(this@BerryAdapter)
     }
 
 
-}
-
-class BerryDiffCallback(
-    private val oldBerries: MutableList<GenericResultsResponse>,
-    private val newBerries: MutableList<GenericResultsResponse>
-) : DiffUtil.Callback() {
-
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldBerries.get(oldItemPosition).name == newBerries.get(newItemPosition).name
-    }
-
-    override fun getOldListSize(): Int {
-        return oldBerries.size
-    }
-
-    override fun getNewListSize(): Int {
-        return newBerries.size
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldBerries.get(oldItemPosition) == newBerries.get(newItemPosition)
-    }
 }
