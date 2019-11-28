@@ -3,12 +3,9 @@ package br.com.wab.myapplication.ui.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.wab.myapplication.R
 import br.com.wab.myapplication.model.GenericResultsResponse
 import br.com.wab.myapplication.ui.recyclerview.adapter.BerryAdapter
@@ -47,17 +44,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getBerriesList(){
-
         viewModel.berries(
             onStarted = {
                 progress_main.visibility = View.VISIBLE
             },
             onFinished = {
                 progress_main.visibility = View.GONE
-            }
-        ).observe(this, Observer {
-            berryAdapter.updateList(it)
-        })
+            })
+            .observe(this, Observer {
+                berryAdapter.updateList(it)
+            })
 
     }
 }

@@ -9,6 +9,4 @@ class BerryService {
 
     suspend fun getBerry(id: Int) = repository.getBerryById(id)
 
-
-    
 }

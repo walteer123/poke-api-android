@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 
 object ExceptionHandler {
 
-    val defaultHandler: CoroutineExceptionHandler  by lazy {
+    val defaultHandler by lazy {
         CoroutineExceptionHandler { _, exception ->
             Log.d("Exceção!", "${exception.message}")
         }
