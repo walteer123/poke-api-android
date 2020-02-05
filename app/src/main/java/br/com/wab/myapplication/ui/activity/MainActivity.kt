@@ -1,9 +1,9 @@
 package br.com.wab.myapplication.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import br.com.wab.myapplication.R
@@ -11,10 +11,11 @@ import br.com.wab.myapplication.model.GenericResultsResponse
 import br.com.wab.myapplication.ui.recyclerview.adapter.BerryAdapter
 import br.com.wab.myapplication.ui.viewmodel.BerryViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: BerryViewModel
+    @Inject lateinit var viewModel: BerryViewModel
 
     private val berryAdapter by lazy {
         BerryAdapter(this)
@@ -44,16 +45,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getBerriesList(){
-        viewModel.berries(
-            onStarted = {
-                progress_main.visibility = View.VISIBLE
-            },
-            onFinished = {
-                progress_main.visibility = View.GONE
-            })
-            .observe(this, Observer {
+        viewModel.berries().observe(this, Observer {
                 berryAdapter.updateList(it)
             })
-
     }
 }

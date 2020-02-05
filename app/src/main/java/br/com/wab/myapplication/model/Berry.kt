@@ -1,5 +1,8 @@
 package br.com.wab.myapplication.model
-data class Berry(
+
+import javax.inject.Inject
+
+class Berry @Inject constructor(
   val id: Int?,
   val name: String?,
   val size: Int?

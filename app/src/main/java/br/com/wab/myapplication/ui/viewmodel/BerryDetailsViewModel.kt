@@ -25,7 +25,6 @@ class BerryDetailsViewModel: ViewModel() {
         emit(response)
     }
 
-
     override fun onCleared() {
         super.onCleared()
         job.cancel()

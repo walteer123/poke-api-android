@@ -20,6 +20,7 @@ class BerryDetailsActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(BerryDetailsViewModel::class.java)
 
+
     }
 
     override fun onResume() {
